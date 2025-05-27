@@ -1,0 +1,55 @@
+﻿@model IEnumerable<OnlineBookStore.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Online Book Store</h2>
+
+<p>
+    @Html.ActionLink("Add New Book", "Create")
+</p>
+<p>
+	@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+	{
+		@Html.TextBox("search") <input type="submit" value=" Search" />
+	}
+</p>
+<table class="table">
+	<tr>
+		<th>
+			<h4>Book Id</h4>
+		</th>
+		<th>
+			<h4>Book Title</h4>
+		</th>
+		<th>
+			<h4>Reserved</h4>
+		</th>
+		<th></th>
+	</tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsReserved)
+        </td>
+		<td>
+			@if (!item.IsReserved)
+			{
+				@Html.ActionLink("Reserve |", "Reserve", new { id = item.BookID })
+			}
+			
+			@Html.ActionLink("Details", "Detail", new { id = item.BookID }) |
+			@Html.ActionLink("Delete", "Delete", new { id = item.BookID })
+		</td>
+    </tr>
+}
+
+</table>
